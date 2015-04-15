@@ -6,35 +6,16 @@ package webex.ob;
 public class RegisterInfo {
 
     public enum Type {
-        VISITOR,
-        MEMBER
+        VISITOR, MEMBER
     }
 
     public enum JoinStatus {
-        REGISTER,
-        ACCEPT,
-        REJECT
+        REGISTER, ACCEPT, REJECT
     }
 
     public enum Role {
-        ATTENDEE,
-        PRESENTER
+        ATTENDEE, PRESENTER
     }
-
-    public enum EmailInvitation {
-        TRUE("true"),
-        FALSE("false");
-
-        private String value;
-        EmailInvitation(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
-
 
     private String name;
 
@@ -53,13 +34,13 @@ public class RegisterInfo {
     private String sessionNum;
 
     public RegisterInfo(String name, String email, Type type, Role role, JoinStatus joinStatus,
-                        EmailInvitation emailInvitation, String sessionKey, String sessionNum) {
+                        Boolean emailInvitation, String sessionKey, String sessionNum) {
         this.name = name;
         this.email = email;
         this.type = type.name();
         this.role = role.name();
         this.joinStatus = joinStatus.name();
-        this.emailInvitation = emailInvitation.getValue();
+        this.emailInvitation = emailInvitation.toString();
         this.sessionKey = sessionKey;
         this.sessionNum = sessionNum;
     }
