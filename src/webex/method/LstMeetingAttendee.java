@@ -14,13 +14,20 @@ import java.util.List;
 /**
  * Created by bonjan on 2015/4/1.
  */
-public class LstMeetingAttendee {
+public class LstMeetingAttendee implements WebExMethodBase {
 
-    /**
-     * @param meetingKey
-     * @return null if receive unexpected exception
-     */
-    public static List<Attendee> getAttendees(String meetingKey) {
+    private String meetingKey;
+
+    private List<Attendee> attendees;
+
+    public LstMeetingAttendee(String meetingKey) {
+        this.meetingKey = meetingKey;
+        attendees = new ArrayList<Attendee>();
+        parseFromResponse(sendRequest());
+    }
+
+    @Override
+    public String sendRequest() {
         Document attendeeDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
 
         /**
@@ -37,21 +44,22 @@ public class LstMeetingAttendee {
         mKey.setTextContent(meetingKey);
         bodyContent.appendChild(mKey);
 
-        return parseFromResponse(HttpUtil.sendXmlRequest(WebExUtil.xmlToString(attendeeDocument)));
+        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(attendeeDocument));
     }
 
-    /**
-     * @param respXml
-     * @return null if receive unexpected exception
-     */
-    public static List<Attendee> parseFromResponse(String respXml) {
+    @Override
+    public List<Attendee> getResponse() {
+        return attendees;
+    }
+
+    @Override
+    public void parseFromResponse(String respXml) {
         Document doc = WebExUtil.stringToXml(respXml);
 
         assert doc != null;
         Element result = (Element)doc.getElementsByTagName("serv:result").item(0);
         NodeList nodes = doc.getElementsByTagName("att:attendee");
         if("SUCCESS".equals(result.getTextContent())) {
-            List<Attendee> attendees = new ArrayList<Attendee>();
             for (int i = 0; i < nodes.getLength(); i++) {
                 Attendee attendee = new Attendee();
                 attendee.setName(((Element) nodes.item(i))
@@ -68,16 +76,14 @@ public class LstMeetingAttendee {
                         .getElementsByTagName("att:role").item(0).getTextContent());
                 attendees.add(attendee);
             }
-
-            return attendees;
         } else if("FAILURE".equals(result.getTextContent())) {
-
             Element exceptionID = (Element)doc.getElementsByTagName("serv:exceptionID").item(0);
             if("000015".equals(exceptionID.getTextContent())) {
-                return Collections.emptyList();
+                attendees = Collections.emptyList();
+            } else {
+                attendees = null;
             }
         }
-        return null;
     }
 
 }

@@ -14,12 +14,17 @@ import java.util.List;
 /**
  * Created by bonjan on 2015/4/8.
  */
-public class LstOpenSession {
+public class LstOpenSession implements WebExMethodBase {
 
-    /**
-     * @return null if receive unexpected exception
-     */
-    public static List<OpenSession> getTrainingSessions() {
+    private List<OpenSession> openSessions;
+
+    public LstOpenSession() {
+        openSessions = new ArrayList<OpenSession>();
+        parseFromResponse(sendRequest());
+    }
+
+    @Override
+    public String sendRequest() {
         Document sessionsDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
 
         /**
@@ -36,21 +41,22 @@ public class LstOpenSession {
         serviceType.setTextContent("TrainingCenter");
         bodyContent.appendChild(serviceType);
 
-        return parseFromResponse(HttpUtil.sendXmlRequest(WebExUtil.xmlToString(sessionsDocument)));
+        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(sessionsDocument));
     }
 
-    /**
-     * @param respXml
-     * @return null if receive unexpected exception
-     */
-    public static List<OpenSession> parseFromResponse(String respXml) {
+    @Override
+    public List<OpenSession> getResponse() {
+        return openSessions;
+    }
+
+    @Override
+    public void parseFromResponse(String respXml) {
         Document doc = WebExUtil.stringToXml(respXml);
 
         assert doc != null;
         Element result = (Element)doc.getElementsByTagName("serv:result").item(0);
         NodeList nodes = doc.getElementsByTagName("ep:sessions");
         if("SUCCESS".equals(result.getTextContent())) {
-            List<OpenSession> openSessions = new ArrayList<OpenSession>();
             for (int i = 0; i < nodes.getLength(); i++) {
                 OpenSession openSession = new OpenSession();
                 openSession.setSessionKey(((Element) nodes.item(i))
@@ -67,15 +73,13 @@ public class LstOpenSession {
                         .getElementsByTagName("ep:listStatus").item(0).getTextContent());
                 openSessions.add(openSession);
             }
-
-            return openSessions;
         } else if("FAILURE".equals(result.getTextContent())) {
-
             Element exceptionID = (Element)doc.getElementsByTagName("serv:exceptionID").item(0);
             if("000015".equals(exceptionID.getTextContent())) {
-                return Collections.emptyList();
+                openSessions = Collections.emptyList();
+            } else {
+                openSessions = null;
             }
         }
-        return null;
     }
 }

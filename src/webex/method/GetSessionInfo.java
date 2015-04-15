@@ -9,13 +9,20 @@ import webex.WebExUtil;
 /**
  * Created by bonjan on 2015/4/7.
  */
-public class GetSessionInfo {
+public class GetSessionInfo implements WebExMethodBase {
 
-    /**
-     * @param sessionKey
-     * @return null if receive unexpected exception
-     */
-    public static SessionInfo getInfo(String sessionKey) {
+    private String sessionKey;
+
+    private SessionInfo sessionInfo;
+
+    public GetSessionInfo(String sessionKey) {
+        this.sessionKey = sessionKey;
+        sessionInfo = new SessionInfo();
+        parseFromResponse(sendRequest());
+    }
+
+    @Override
+    public String sendRequest() {
         Document sessionInfoDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
 
         /**
@@ -32,20 +39,21 @@ public class GetSessionInfo {
         sKey.setTextContent(sessionKey);
         bodyContent.appendChild(sKey);
 
-        return parseFromResponse(HttpUtil.sendXmlRequest(WebExUtil.xmlToString(sessionInfoDocument)));
+        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(sessionInfoDocument));
     }
 
-    /**
-     * @param respXml
-     * @return null if receive unexpected exception
-     */
-    public static SessionInfo parseFromResponse(String respXml) {
+    @Override
+    public SessionInfo getResponse() {
+        return sessionInfo;
+    }
+
+    @Override
+    public void parseFromResponse(String respXml) {
         Document doc = WebExUtil.stringToXml(respXml);
 
         assert doc != null;
         Element result = (Element)doc.getElementsByTagName("serv:result").item(0);
         if("SUCCESS".equals(result.getTextContent())) {
-            SessionInfo sessionInfo = new SessionInfo();
             sessionInfo.setConfName(doc.getElementsByTagName("ep:confName").item(0)
                     .getTextContent());
             sessionInfo.setStatus(doc.getElementsByTagName("ep:status").item(0)
@@ -64,9 +72,9 @@ public class GetSessionInfo {
                     .getTextContent());
             sessionInfo.setHostID(doc.getElementsByTagName("ep:webExId").item(0)
                     .getTextContent());
-            return sessionInfo;
+        } else {
+            sessionInfo = null;
         }
-        return null;
     }
 
 }

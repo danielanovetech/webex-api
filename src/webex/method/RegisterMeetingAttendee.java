@@ -14,13 +14,20 @@ import java.util.List;
 /**
  * Created by bonjan on 2015/4/2.
  */
-public class RegisterMeetingAttendee {
+public class RegisterMeetingAttendee implements WebExMethodBase {
 
-    /**
-     * @param registerInfos
-     * @return null if receive unexpected exception
-     */
-    public static List<Registrant> sendRegistration(List<RegisterInfo> registerInfos) {
+    private List<RegisterInfo> registerInfos;
+
+    private List<Registrant> registrants;
+
+    public RegisterMeetingAttendee(List<RegisterInfo> registerInfos) {
+        this.registerInfos = registerInfos;
+        this.registrants = new ArrayList<Registrant>();
+        parseFromResponse(sendRequest());
+    }
+
+    @Override
+    public String sendRequest() {
         Document registerDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
 
         Element bodyContent = registerDocument.createElement("bodyContent");
@@ -76,22 +83,22 @@ public class RegisterMeetingAttendee {
             person.appendChild(email);
             person.appendChild(type);
         }
-
-        return parseFromResponse(HttpUtil.sendXmlRequest(WebExUtil.xmlToString(registerDocument)));
+        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(registerDocument));
     }
 
-    /**
-     * @param respXml
-     * @return null if receive unexpected exception
-     */
-    public static List<Registrant> parseFromResponse(String respXml) {
+    @Override
+    public List<Registrant> getResponse() {
+        return registrants;
+    }
+
+    @Override
+    public void parseFromResponse(String respXml) {
         Document doc = WebExUtil.stringToXml(respXml);
 
         assert doc != null;
         Element result = (Element)doc.getElementsByTagName("serv:result").item(0);
         NodeList nodes = doc.getElementsByTagName("att:register");
         if("SUCCESS".equals(result.getTextContent())) {
-            List<Registrant> registrants = new ArrayList<Registrant>();
             for (int i = 0; i < nodes.getLength(); i++) {
                 Registrant registrant = new Registrant();
                 registrant.setAttendeeID(((Element) nodes.item(i))
@@ -100,10 +107,9 @@ public class RegisterMeetingAttendee {
                         .getElementsByTagName("att:registerID").item(0).getTextContent());
                 registrants.add(registrant);
             }
-
-            return registrants;
+        } else {
+            registrants = null;
         }
-        return null;
     }
 
 }

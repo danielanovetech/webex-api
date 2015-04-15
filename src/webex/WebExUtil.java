@@ -4,7 +4,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import webex.method.RegisterMeetingAttendee;
 import webex.ob.RegisterInfo;
 import webex.ob.RegisterInfo.*;
 
@@ -64,7 +63,10 @@ public class WebExUtil {
 //                null);
 //        List<RegisterInfo> registerInfos = new ArrayList<RegisterInfo>();
 //        registerInfos.add(registerInfo);
-//        RegisterMeetingAttendee.sendRegistration(registerInfos);
+//        WebExAPI.registerMeetingAttendee(registerInfos).getResponse();
+//        WebExAPI.lstOpenSession().getResponse();
+//        WebExAPI.lstMeetingAttendee("622242668").getResponse();
+//        WebExAPI.getSessionInfo("622242668").getResponse();
     }
 
     public static void initialize(String webExID, String password, String siteID,
