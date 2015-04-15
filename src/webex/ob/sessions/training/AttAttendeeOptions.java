@@ -3,7 +3,7 @@ package webex.ob.sessions.training;
 /**
  * Created by bonjan on 2015/4/15.
  */
-public class AttendeeOptions {
+public class AttAttendeeOptions {
 
     private String request;
 

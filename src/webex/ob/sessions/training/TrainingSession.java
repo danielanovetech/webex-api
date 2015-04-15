@@ -5,17 +5,17 @@ package webex.ob.sessions.training;
  */
 public class TrainingSession {
 
-    private AccessControl accessControl;
+    private AttAccessControl attAccessControl;
 
-    private AttendeeOptions attendeeOptions;
+    private AttAttendeeOptions attAttendeeOptions;
 
-    private EnableOptions enableOptions;
+    private AttEnableOptions attEnableOptions;
 
-    private MetaData metaData;
+    private AttMetaData attMetaData;
 
-    private Repeat repeat;
+    private AttRepeat attRepeat;
 
-    private Schedule schedule;
+    private AttSchedule attSchedule;
 
-    private Telephony telephony;
+    private AttTelephony attTelephony;
 }
