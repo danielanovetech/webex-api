@@ -1,9 +1,25 @@
 package webex.ob.sessions.training;
 
+import webex.ob.TimeZoneId;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by bonjan on 2015/4/15.
  */
 public class AttSchedule {
+
+    public AttSchedule(Integer duration, Integer openTime, Timestamp startDate, TimeZoneId timeZoneId) {
+        this.duration = String.valueOf(duration);
+        this.openTime = String.valueOf(openTime);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        simpleDateFormat.setTimeZone(timeZoneId.getTimeZone());
+        Date date = new Date(startDate.getTime());
+        this.startDate = simpleDateFormat.format(date);
+        this.timeZoneID = timeZoneId.getId();
+    }
 
     private String startDate;
 
@@ -15,10 +31,6 @@ public class AttSchedule {
 
     public String getStartDate() {
         return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
     }
 
     public String getDuration() {

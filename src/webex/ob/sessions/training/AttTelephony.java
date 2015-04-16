@@ -5,6 +5,14 @@ package webex.ob.sessions.training;
  */
 public class AttTelephony {
 
+    public enum TelephonySupport {
+        NONE, CALLIN, CALLBACK, OTHER
+    }
+
+    public AttTelephony(TelephonySupport telephonySupport) {
+        this.telephonySupport = telephonySupport.name();
+    }
+
     private String telephonySupport;
 
     public String getTelephonySupport() {

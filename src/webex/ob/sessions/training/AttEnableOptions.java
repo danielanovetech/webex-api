@@ -1,297 +1,166 @@
 package webex.ob.sessions.training;
 
+import java.util.*;
+
 /**
  * Created by bonjan on 2015/4/15.
  */
 public class AttEnableOptions {
+    
+    public enum Options {
+        ATTENDEELIST("attendeeList"), JAVACLIENT("javaClient"), NATIVECLIENT("nativeClient"), CHAT("chat"),
+        POLL("poll"), AUDIOVIDEO("audioVideo"), FILESHARE("fileShare"), PRESENTATION("presentation"),
+        APPLICATIONSHARE("applicationShare"), DESKTOPSHARE("desktopShare"), WEBTOUR("webTour"),
+        TRAININGSESSIONRECORD("trainingSessionRecord"), ANNOTATION("annotation"), IMPORTDOCUMENT("importDocument"),
+        SAVEDOCUMENT("saveDocument"), PRINTDOCUMENT("printDocument"), POINTER("pointer"), SWITCHPAGE("switchPage"),
+        FULLSCREEN("fullScreen"), THUMBNAIL("thumbnail"), ZOOM("zoom"), COPYPAGE("copyPage"), RCAPPSHARE("rcAppShare"),
+        RCDESKTOPSHARE("rcDesktopShare"), RCWEBTOUR("rcWebTour"),
+        ATTENDEERECORDTRAININGSESSION("attendeeRecordTrainingSession"), VOIP("voip"),
+        FAXINTOTRAININGSESSION("faxIntoTrainingSession"), AUTODELETEAFTERMEETINGEND("autoDeleteAfterMeetingEnd");
 
-    private String attendeeList;
+        private String key;
 
-    private String javaClient;
+        Options(String key) {
+            this.key = key;          
+        }
 
-    private String nativeClient;
-
-    private String chat;
-
-    private String poll;
-
-    private String audioVideo;
-
-    private String fileShare;
-
-    private String presentation;
-
-    private String applicationShare;
-
-    private String desktopShare;
-
-    private String webTour;
-
-    private String trainingSessionRecord;
-
-    private String annotation;
-
-    private String importDocument;
-
-    private String saveDocument;
-
-    private String printDocument;
-
-    private String pointer;
-
-    private String switchPage;
-
-    private String fullScreen;
-
-    private String thumbnail;
-
-    private String zoom;
-
-    private String copyPage;
-
-    private String rcAppShare;
-
-    private String rcDesktopShare;
-
-    private String rcWebTour;
-
-    private String attendeeRecordTrainingSession;
-
-    private String voip;
-
-    private String faxIntoTrainingSession;
-
-    private String autoDeleteAfterMeetingEnd;
-
-    public String getAttendeeList() {
-        return attendeeList;
+        public String getKey() {
+            return key;
+        }
     }
 
-    public void setAttendeeList(String attendeeList) {
-        this.attendeeList = attendeeList;
+    public AttEnableOptions(Options... enableOptionses) {
+        optionMap = new HashMap<String, String>();
+        List<Options> enableOptionsesArray = new ArrayList<Options>(Arrays.asList(enableOptionses));
+        for (Options options: Options.values()) {
+            if(!enableOptionsesArray.contains(options)) {
+                optionMap.put(options.getKey(), String.valueOf(false));
+            } else {
+                optionMap.put(options.getKey(), String.valueOf(true));
+            }
+        }
+    }
+
+    private Map<String, String> optionMap;
+
+    public Map<String, String> getOptionMap() {
+        return optionMap;
+    }
+
+    public String getAttendeeList() {
+        return optionMap.get(Options.ATTENDEELIST.getKey());
     }
 
     public String getJavaClient() {
-        return javaClient;
-    }
-
-    public void setJavaClient(String javaClient) {
-        this.javaClient = javaClient;
+        return optionMap.get(Options.JAVACLIENT.getKey());
     }
 
     public String getNativeClient() {
-        return nativeClient;
-    }
-
-    public void setNativeClient(String nativeClient) {
-        this.nativeClient = nativeClient;
+        return optionMap.get(Options.NATIVECLIENT.getKey());
     }
 
     public String getChat() {
-        return chat;
-    }
-
-    public void setChat(String chat) {
-        this.chat = chat;
+        return optionMap.get(Options.CHAT.getKey());
     }
 
     public String getPoll() {
-        return poll;
-    }
-
-    public void setPoll(String poll) {
-        this.poll = poll;
+        return optionMap.get(Options.POLL.getKey());
     }
 
     public String getAudioVideo() {
-        return audioVideo;
-    }
-
-    public void setAudioVideo(String audioVideo) {
-        this.audioVideo = audioVideo;
+        return optionMap.get(Options.AUDIOVIDEO.getKey());
     }
 
     public String getFileShare() {
-        return fileShare;
-    }
-
-    public void setFileShare(String fileShare) {
-        this.fileShare = fileShare;
+        return optionMap.get(Options.FILESHARE.getKey());
     }
 
     public String getPresentation() {
-        return presentation;
-    }
-
-    public void setPresentation(String presentation) {
-        this.presentation = presentation;
+        return optionMap.get(Options.PRESENTATION.getKey());
     }
 
     public String getApplicationShare() {
-        return applicationShare;
-    }
-
-    public void setApplicationShare(String applicationShare) {
-        this.applicationShare = applicationShare;
+        return optionMap.get(Options.APPLICATIONSHARE.getKey());
     }
 
     public String getDesktopShare() {
-        return desktopShare;
-    }
-
-    public void setDesktopShare(String desktopShare) {
-        this.desktopShare = desktopShare;
+        return optionMap.get(Options.DESKTOPSHARE.getKey());
     }
 
     public String getWebTour() {
-        return webTour;
-    }
-
-    public void setWebTour(String webTour) {
-        this.webTour = webTour;
+        return optionMap.get(Options.WEBTOUR.getKey());
     }
 
     public String getTrainingSessionRecord() {
-        return trainingSessionRecord;
-    }
-
-    public void setTrainingSessionRecord(String trainingSessionRecord) {
-        this.trainingSessionRecord = trainingSessionRecord;
+        return optionMap.get(Options.TRAININGSESSIONRECORD.getKey());
     }
 
     public String getAnnotation() {
-        return annotation;
-    }
-
-    public void setAnnotation(String annotation) {
-        this.annotation = annotation;
+        return optionMap.get(Options.ANNOTATION.getKey());
     }
 
     public String getImportDocument() {
-        return importDocument;
-    }
-
-    public void setImportDocument(String importDocument) {
-        this.importDocument = importDocument;
+        return optionMap.get(Options.IMPORTDOCUMENT.getKey());
     }
 
     public String getSaveDocument() {
-        return saveDocument;
-    }
-
-    public void setSaveDocument(String saveDocument) {
-        this.saveDocument = saveDocument;
+        return optionMap.get(Options.SAVEDOCUMENT.getKey());
     }
 
     public String getPrintDocument() {
-        return printDocument;
-    }
-
-    public void setPrintDocument(String printDocument) {
-        this.printDocument = printDocument;
+        return optionMap.get(Options.PRINTDOCUMENT.getKey());
     }
 
     public String getPointer() {
-        return pointer;
-    }
-
-    public void setPointer(String pointer) {
-        this.pointer = pointer;
+        return optionMap.get(Options.POINTER.getKey());
     }
 
     public String getSwitchPage() {
-        return switchPage;
-    }
-
-    public void setSwitchPage(String switchPage) {
-        this.switchPage = switchPage;
+        return optionMap.get(Options.SWITCHPAGE.getKey());
     }
 
     public String getFullScreen() {
-        return fullScreen;
-    }
-
-    public void setFullScreen(String fullScreen) {
-        this.fullScreen = fullScreen;
+        return optionMap.get(Options.FULLSCREEN.getKey());
     }
 
     public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+        return optionMap.get(Options.THUMBNAIL.getKey());
     }
 
     public String getZoom() {
-        return zoom;
-    }
-
-    public void setZoom(String zoom) {
-        this.zoom = zoom;
+        return optionMap.get(Options.ZOOM.getKey());
     }
 
     public String getCopyPage() {
-        return copyPage;
-    }
-
-    public void setCopyPage(String copyPage) {
-        this.copyPage = copyPage;
+        return optionMap.get(Options.COPYPAGE.getKey());
     }
 
     public String getRcAppShare() {
-        return rcAppShare;
-    }
-
-    public void setRcAppShare(String rcAppShare) {
-        this.rcAppShare = rcAppShare;
+        return optionMap.get(Options.RCAPPSHARE.getKey());
     }
 
     public String getRcDesktopShare() {
-        return rcDesktopShare;
-    }
-
-    public void setRcDesktopShare(String rcDesktopShare) {
-        this.rcDesktopShare = rcDesktopShare;
+        return optionMap.get(Options.RCDESKTOPSHARE.getKey());
     }
 
     public String getRcWebTour() {
-        return rcWebTour;
-    }
-
-    public void setRcWebTour(String rcWebTour) {
-        this.rcWebTour = rcWebTour;
+        return optionMap.get(Options.RCWEBTOUR.getKey());
     }
 
     public String getAttendeeRecordTrainingSession() {
-        return attendeeRecordTrainingSession;
-    }
-
-    public void setAttendeeRecordTrainingSession(String attendeeRecordTrainingSession) {
-        this.attendeeRecordTrainingSession = attendeeRecordTrainingSession;
+        return optionMap.get(Options.ATTENDEERECORDTRAININGSESSION.getKey());
     }
 
     public String getVoip() {
-        return voip;
-    }
-
-    public void setVoip(String voip) {
-        this.voip = voip;
+        return optionMap.get(Options.VOIP.getKey());
     }
 
     public String getFaxIntoTrainingSession() {
-        return faxIntoTrainingSession;
-    }
-
-    public void setFaxIntoTrainingSession(String faxIntoTrainingSession) {
-        this.faxIntoTrainingSession = faxIntoTrainingSession;
+        return optionMap.get(Options.FAXINTOTRAININGSESSION.getKey());
     }
 
     public String getAutoDeleteAfterMeetingEnd() {
-        return autoDeleteAfterMeetingEnd;
+        return optionMap.get(Options.AUTODELETEAFTERMEETINGEND.getKey());
     }
 
-    public void setAutoDeleteAfterMeetingEnd(String autoDeleteAfterMeetingEnd) {
-        this.autoDeleteAfterMeetingEnd = autoDeleteAfterMeetingEnd;
-    }
 }

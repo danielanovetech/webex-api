@@ -1,10 +1,8 @@
 package webex;
 
-import webex.method.GetSessionInfo;
-import webex.method.LstMeetingAttendee;
-import webex.method.LstOpenSession;
-import webex.method.RegisterMeetingAttendee;
+import webex.method.*;
 import webex.ob.RegisterInfo;
+import webex.ob.sessions.training.TrainingSession;
 
 import java.util.List;
 
@@ -27,5 +25,9 @@ public class WebExAPI {
 
     public static GetSessionInfo getSessionInfo(String sessionKey) {
         return new GetSessionInfo(sessionKey);
+    }
+
+    public static CreateTrainingSession createTrainingSession(TrainingSession trainingSession) {
+        return new CreateTrainingSession(trainingSession);
     }
 }

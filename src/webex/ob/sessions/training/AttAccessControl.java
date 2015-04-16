@@ -5,6 +5,15 @@ package webex.ob.sessions.training;
  */
 public class AttAccessControl {
 
+    public enum Listing {
+        UNLISTED, PUBLIC, PRIVATE
+    }
+
+    public AttAccessControl(Listing listing, String sessionPassword) {
+        this.listing = listing.name();
+        this.sessionPassword = sessionPassword;
+    }
+
     private String listing;
 
     private String sessionPassword;

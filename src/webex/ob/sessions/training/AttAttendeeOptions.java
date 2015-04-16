@@ -1,5 +1,11 @@
 package webex.ob.sessions.training;
 
+import webex.ob.TimeZoneId;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by bonjan on 2015/4/15.
  */
@@ -18,6 +24,21 @@ public class AttAttendeeOptions {
     private String registrationCloseDate;
 
     private String emailInvitations;
+
+    public AttAttendeeOptions(Boolean request, Boolean registration, Boolean auto, String registrationPWD,
+                              Integer maxRegistrations, Timestamp registrationCloseDate, Boolean emailInvitations,
+                              TimeZoneId timeZoneId) {
+        this.request = String.valueOf(request);
+        this.registration = String.valueOf(registration);
+        this.auto = String.valueOf(auto);
+        this.registrationPWD = registrationPWD;
+        this.maxRegistrations = String.valueOf(maxRegistrations);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        simpleDateFormat.setTimeZone(timeZoneId.getTimeZone());
+        Date date = new Date(registrationCloseDate.getTime());
+        this.registrationCloseDate = simpleDateFormat.format(date);
+        this.emailInvitations = String.valueOf(emailInvitations);
+    }
 
     public String getRequest() {
         return request;

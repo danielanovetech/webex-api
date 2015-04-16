@@ -6,18 +6,19 @@ package webex.method;
 public interface WebExMethodBase {
 
     /**
-     * send request to webex xml service
+     * Prepare xml request and send to webex xml service
      * @return xml response string
      */
     String sendRequest();
 
     /**
+     * Get response object
      * @return null if receive unexpected exception
      */
     Object getResponse();
 
     /**
-     * parse response string to object
+     * Parse response string to object
      */
     void parseFromResponse(String respXml);
 }

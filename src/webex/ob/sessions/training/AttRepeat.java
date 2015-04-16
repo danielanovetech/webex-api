@@ -5,6 +5,14 @@ package webex.ob.sessions.training;
  */
 public class AttRepeat {
 
+    public enum RepeatType {
+        SINGLE, RECURRING_SINGLE, MULTIPLE_SESSION
+    }
+
+    public AttRepeat(RepeatType repeatType) {
+        this.repeatType = repeatType.name();
+    }
+
     private String repeatType;
 
     public String getRepeatType() {

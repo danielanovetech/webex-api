@@ -4,6 +4,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import webex.method.CreateTrainingSession;
+import webex.ob.TimeZoneId;
+import webex.ob.sessions.training.*;
+import webex.ob.sessions.training.AttAccessControl.*;
+import webex.ob.sessions.training.AttEnableOptions.*;
+import webex.ob.sessions.training.AttRepeat.*;
+import webex.ob.sessions.training.AttTelephony.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,6 +23,13 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,13 +55,13 @@ public class WebExUtil {
     private static Logger logger = Logger.getLogger(WebExUtil.class.getName());
 
     public static void main(String[] args) {
-//        WebExUtil.initialize(
-//                "bobo12345",
-//                "bobo12345",
-//                "690319",
-//                "g0webx!",
-//                "https://apidemoeu.webex.com/WBXService/XMLService"
-//        );
+        WebExUtil.initialize(
+                "bobo12345",
+                "bobo12345",
+                "690319",
+                "g0webx!",
+                "https://apidemoeu.webex.com/WBXService/XMLService"
+        );
 //        RegisterInfo registerInfo = new RegisterInfo(
 //                "bbbaaa",
 //                "bbbaaa@gmail.com",
@@ -63,6 +77,22 @@ public class WebExUtil {
 //        WebExAPI.lstOpenSession().getResponse();
 //        WebExAPI.lstMeetingAttendee("622242668").getResponse();
 //        WebExAPI.getSessionInfo("622242668").getResponse();
+//        new CreateTrainingSession().sendRequest();
+
+        AttSchedule attSchedule = new AttSchedule(5, 5, new Timestamp(new GregorianCalendar(2015,5,1).getTime().getTime()), TimeZoneId.HONG_KONG);
+        AttEnableOptions attEnableOptions = new AttEnableOptions(Options.VOIP, Options.ANNOTATION);
+        AttAttendeeOptions attAttendeeOptions =
+                new AttAttendeeOptions(true, true, true, "1111", 10,
+                        new Timestamp(new GregorianCalendar(2015,5,1).getTime().getTime()), false, TimeZoneId.HONG_KONG);
+        AttAccessControl attAccessControl = new AttAccessControl(Listing.PUBLIC, "1111");
+        AttRepeat attRepeat = new AttRepeat(RepeatType.SINGLE);
+        AttMetaData attMetaData = new AttMetaData("agenda", "test1805", "description");
+        AttTelephony attTelephony = new AttTelephony(TelephonySupport.NONE);
+
+        TrainingSession trainingSession = new TrainingSession(
+                attAccessControl, attAttendeeOptions, attEnableOptions,
+                attMetaData, attRepeat, attSchedule, attTelephony);
+        WebExAPI.createTrainingSession(trainingSession);
     }
 
     public static void initialize(String webExID, String password, String siteID,

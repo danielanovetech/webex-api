@@ -11,6 +11,12 @@ public class AttMetaData {
 
     private String description;
 
+    public AttMetaData(String agenda, String confName, String description) {
+        this.agenda = agenda;
+        this.confName = confName;
+        this.description = description;
+    }
+
     public String getConfName() {
         return confName;
     }
