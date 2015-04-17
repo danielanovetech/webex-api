@@ -5,9 +5,9 @@ import org.w3c.dom.Element;
 import webex.DocumentUtil;
 import webex.HttpUtil;
 import webex.WebExUtil;
-import webex.ob.sessions.training.AttEnableOptions;
-import webex.ob.sessions.training.AttEnableOptions.*;
-import webex.ob.sessions.training.TrainingSession;
+import webex.ob.req.sessions.training.TrainingSession;
+import webex.ob.req.sessions.training.AttEnableOptions.*;
+import webex.ob.resp.AdditionalInfo;
 
 /**
  * Created by bonjan on 2015/4/14.
@@ -16,9 +16,12 @@ public class CreateTrainingSession implements WebExMethodBase {
 
     private TrainingSession trainingSession;
 
+    private AdditionalInfo additionalInfo;
+
     public CreateTrainingSession(TrainingSession trainingSession) {
         this.trainingSession = trainingSession;
-        sendRequest();
+        additionalInfo = new AdditionalInfo();
+        parseFromResponse(sendRequest());
     }
 
     @Override
@@ -116,11 +119,20 @@ public class CreateTrainingSession implements WebExMethodBase {
 
     @Override
     public Object getResponse() {
-        return null;
+        return additionalInfo;
     }
 
     @Override
     public void parseFromResponse(String respXml) {
+        Document doc = WebExUtil.stringToXml(respXml);
 
+        assert doc != null;
+        Element result = (Element)doc.getElementsByTagName("serv:result").item(0);
+        if("SUCCESS".equals(result.getTextContent())) {
+            additionalInfo.setSessionKey(doc.getElementsByTagName("train:sessionkey").item(0).getTextContent());
+            additionalInfo.setGuestToken(doc.getElementsByTagName("train:guestToken").item(0).getTextContent());
+        } else {
+            additionalInfo = null;
+        }
     }
 }

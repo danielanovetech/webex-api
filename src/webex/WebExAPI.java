@@ -1,8 +1,8 @@
 package webex;
 
 import webex.method.*;
-import webex.ob.RegisterInfo;
-import webex.ob.sessions.training.TrainingSession;
+import webex.ob.req.Attendees;
+import webex.ob.req.sessions.training.TrainingSession;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class WebExAPI {
 
-    public static RegisterMeetingAttendee registerMeetingAttendee(List<RegisterInfo> registerInfos) {
-        return new RegisterMeetingAttendee(registerInfos);
+    public static RegisterMeetingAttendee registerMeetingAttendee(List<Attendees> attendees) {
+        return new RegisterMeetingAttendee(attendees);
     }
 
     public static LstOpenSession lstOpenSession() {

@@ -1,9 +1,9 @@
-package webex.ob;
+package webex.ob.req;
 
 /**
  * Created by bonjan on 2015/4/2.
  */
-public class RegisterInfo {
+public class Attendees {
 
     public enum Type {
         VISITOR, MEMBER
@@ -33,8 +33,8 @@ public class RegisterInfo {
 
     private String sessionNum;
 
-    public RegisterInfo(String name, String email, Type type, Role role, JoinStatus joinStatus,
-                        Boolean emailInvitation, String sessionKey, String sessionNum) {
+    public Attendees(String name, String email, Type type, Role role, JoinStatus joinStatus,
+                     Boolean emailInvitation, String sessionKey, String sessionNum) {
         this.name = name;
         this.email = email;
         this.type = type.name();

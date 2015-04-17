@@ -4,7 +4,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import webex.HttpUtil;
-import webex.ob.OpenSession;
+import webex.ob.resp.OpenSession;
 import webex.WebExUtil;
 
 import java.util.ArrayList;

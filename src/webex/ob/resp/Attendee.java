@@ -1,4 +1,4 @@
-package webex.ob;
+package webex.ob.resp;
 
 /**
  * Created by bonjan on 2015/4/1.

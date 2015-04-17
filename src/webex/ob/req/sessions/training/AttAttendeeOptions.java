@@ -1,4 +1,4 @@
-package webex.ob.sessions.training;
+package webex.ob.req.sessions.training;
 
 import webex.ob.TimeZoneId;
 

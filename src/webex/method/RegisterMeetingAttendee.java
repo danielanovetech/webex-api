@@ -4,8 +4,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import webex.HttpUtil;
-import webex.ob.RegisterInfo;
-import webex.ob.Registrant;
+import webex.ob.req.Attendees;
+import webex.ob.resp.Register;
 import webex.WebExUtil;
 
 import java.util.ArrayList;
@@ -16,13 +16,13 @@ import java.util.List;
  */
 public class RegisterMeetingAttendee implements WebExMethodBase {
 
-    private List<RegisterInfo> registerInfos;
+    private List<Attendees> attendees;
 
-    private List<Registrant> registrants;
+    private List<Register> registers;
 
-    public RegisterMeetingAttendee(List<RegisterInfo> registerInfos) {
-        this.registerInfos = registerInfos;
-        this.registrants = new ArrayList<Registrant>();
+    public RegisterMeetingAttendee(List<Attendees> attendees) {
+        this.attendees = attendees;
+        this.registers = new ArrayList<Register>();
         parseFromResponse(sendRequest());
     }
 
@@ -35,7 +35,7 @@ public class RegisterMeetingAttendee implements WebExMethodBase {
                 "java:com.webex.service.binding.attendee.RegisterMeetingAttendee");
         registerDocument.getElementsByTagName("body").item(0).appendChild(bodyContent);
 
-        for(RegisterInfo registerInfo : registerInfos) {
+        for(Attendees registerInfo : attendees) {
             /**
              * Parent is <bodyContent></bodyContent>
              */
@@ -87,8 +87,8 @@ public class RegisterMeetingAttendee implements WebExMethodBase {
     }
 
     @Override
-    public List<Registrant> getResponse() {
-        return registrants;
+    public List<Register> getResponse() {
+        return registers;
     }
 
     @Override
@@ -100,15 +100,15 @@ public class RegisterMeetingAttendee implements WebExMethodBase {
         NodeList nodes = doc.getElementsByTagName("att:register");
         if("SUCCESS".equals(result.getTextContent())) {
             for (int i = 0; i < nodes.getLength(); i++) {
-                Registrant registrant = new Registrant();
-                registrant.setAttendeeID(((Element) nodes.item(i))
+                Register register = new Register();
+                register.setAttendeeID(((Element) nodes.item(i))
                         .getElementsByTagName("att:attendeeID").item(0).getTextContent());
-                registrant.setRegisterID(((Element) nodes.item(i))
+                register.setRegisterID(((Element) nodes.item(i))
                         .getElementsByTagName("att:registerID").item(0).getTextContent());
-                registrants.add(registrant);
+                registers.add(register);
             }
         } else {
-            registrants = null;
+            registers = null;
         }
     }
 

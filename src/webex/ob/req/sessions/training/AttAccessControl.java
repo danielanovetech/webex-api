@@ -1,4 +1,4 @@
-package webex.ob.sessions.training;
+package webex.ob.req.sessions.training;
 
 /**
  * Created by bonjan on 2015/4/15.

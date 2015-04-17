@@ -1,9 +1,9 @@
-package webex.ob;
+package webex.ob.resp;
 
 /**
  * Created by bonjan on 2015/4/2.
  */
-public class Registrant {
+public class Register {
 
     private String attendeeID;
 
