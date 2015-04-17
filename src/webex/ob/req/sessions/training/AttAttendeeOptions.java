@@ -40,6 +40,10 @@ public class AttAttendeeOptions {
         this.emailInvitations = String.valueOf(emailInvitations);
     }
 
+    public AttAttendeeOptions() {
+        this.request = String.valueOf(true);
+    }
+
     public String getRequest() {
         return request;
     }

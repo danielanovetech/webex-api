@@ -14,6 +14,14 @@ public class AttAccessControl {
         this.sessionPassword = sessionPassword;
     }
 
+    public AttAccessControl(String listing) {
+        this.listing = listing;
+    }
+
+    public AttAccessControl() {
+        this.listing = Listing.PUBLIC.name();
+    }
+
     private String listing;
 
     private String sessionPassword;
