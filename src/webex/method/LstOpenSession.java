@@ -3,6 +3,7 @@ package webex.method;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import webex.DocumentUtil;
 import webex.HttpUtil;
 import webex.ob.resp.OpenSession;
 import webex.WebExUtil;
@@ -25,23 +26,21 @@ public class LstOpenSession implements WebExMethodBase {
 
     @Override
     public String sendRequest() {
-        Document sessionsDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
+        Document losDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
 
         /**
          * Parent is <body></body>
          */
-        Element bodyContent = sessionsDocument.createElement("bodyContent");
+        Element bodyContent = losDocument.createElement("bodyContent");
         bodyContent.setAttribute("xsi:type", "java:com.webex.service.binding.ep.LstOpenSession");
-        sessionsDocument.getElementsByTagName("body").item(0).appendChild(bodyContent);
+        losDocument.getElementsByTagName("body").item(0).appendChild(bodyContent);
 
         /**
          * Parent is <bodyContent></bodyContent>
          */
-        Element serviceType = sessionsDocument.createElement("serviceType");
-        serviceType.setTextContent("TrainingCenter");
-        bodyContent.appendChild(serviceType);
+        DocumentUtil.appendChildWithContent(losDocument, "bodyContent", "serviceType", "TrainingCenter");
 
-        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(sessionsDocument));
+        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(losDocument));
     }
 
     @Override

@@ -3,11 +3,13 @@ package webex.method;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import webex.DocumentUtil;
 import webex.HttpUtil;
 import webex.ob.req.Attendees;
 import webex.ob.resp.Register;
 import webex.WebExUtil;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,62 +30,40 @@ public class RegisterMeetingAttendee implements WebExMethodBase {
 
     @Override
     public String sendRequest() {
-        Document registerDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
+        Document rmtDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
 
-        Element bodyContent = registerDocument.createElement("bodyContent");
+        Element bodyContent = rmtDocument.createElement("bodyContent");
         bodyContent.setAttribute("xsi:type",
                 "java:com.webex.service.binding.attendee.RegisterMeetingAttendee");
-        registerDocument.getElementsByTagName("body").item(0).appendChild(bodyContent);
+        rmtDocument.getElementsByTagName("body").item(0).appendChild(bodyContent);
 
         for(Attendees registerInfo : attendees) {
             /**
              * Parent is <bodyContent></bodyContent>
              */
-            Element attendees = registerDocument.createElement("attendees");
-            bodyContent.appendChild(attendees);
+            DocumentUtil.appendChild(rmtDocument, "bodyContent", "attendees");
 
             /**
              * Parent is <attendees></attendees>
              */
-            Element person = registerDocument.createElement("person");
-            Element joinStatus = registerDocument.createElement("joinStatus");
-            Element role = registerDocument.createElement("role");
-            Element emailInvitations = registerDocument.createElement("emailInvitations");
-            Element sessionKey = registerDocument.createElement("sessionKey");
-            //set content
-            joinStatus.setTextContent(registerInfo.getJoinStatus());
-            role.setTextContent(registerInfo.getRole());
-            emailInvitations.setTextContent(registerInfo.getEmailInvitation());
-            sessionKey.setTextContent(registerInfo.getSessionKey());
-            //add child
-            attendees.appendChild(person);
-            attendees.appendChild(joinStatus);
-            attendees.appendChild(role);
-            attendees.appendChild(emailInvitations);
-            attendees.appendChild(sessionKey);
+            DocumentUtil.appendChild(rmtDocument, "attendees", "person");
+            DocumentUtil.appendChildWithContent(rmtDocument, "attendees", "joinStatus", registerInfo.getJoinStatus());
+            DocumentUtil.appendChildWithContent(rmtDocument, "attendees", "role", registerInfo.getRole());
+            DocumentUtil.appendChildWithContent(rmtDocument, "attendees", "emailInvitations", registerInfo.getEmailInvitation());
+            DocumentUtil.appendChildWithContent(rmtDocument, "attendees", "sessionKey", registerInfo.getSessionKey());
             //for recurring sessions
             if (registerInfo.getSessionNum() != null) {
-                Element sessionNum = registerDocument.createElement("sessionNum");
-                sessionNum.setTextContent(registerInfo.getSessionNum());
-                attendees.appendChild(sessionNum);
+                DocumentUtil.appendChildWithContent(rmtDocument, "attendees", "sessionNum", registerInfo.getSessionNum());
             }
 
             /**
              * Parent is <person></person>
              */
-            Element name = registerDocument.createElement("name");
-            Element email = registerDocument.createElement("email");
-            Element type = registerDocument.createElement("type");
-            //set content
-            name.setTextContent(registerInfo.getName());
-            email.setTextContent(registerInfo.getEmail());
-            type.setTextContent(registerInfo.getType());
-            //add child
-            person.appendChild(name);
-            person.appendChild(email);
-            person.appendChild(type);
+            DocumentUtil.appendChildWithContent(rmtDocument, "person", "name",registerInfo.getName());
+            DocumentUtil.appendChildWithContent(rmtDocument, "person", "email",registerInfo.getEmail());
+            DocumentUtil.appendChildWithContent(rmtDocument, "person", "type", registerInfo.getType());
         }
-        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(registerDocument));
+        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(rmtDocument));
     }
 
     @Override

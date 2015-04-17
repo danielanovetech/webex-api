@@ -3,6 +3,7 @@ package webex.method;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import webex.DocumentUtil;
 import webex.ob.resp.Attendee;
 import webex.HttpUtil;
 import webex.WebExUtil;
@@ -28,23 +29,21 @@ public class LstMeetingAttendee implements WebExMethodBase {
 
     @Override
     public String sendRequest() {
-        Document attendeeDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
+        Document lmaDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
 
         /**
          * Parent is <body></body>
          */
-        Element bodyContent = attendeeDocument.createElement("bodyContent");
+        Element bodyContent = lmaDocument.createElement("bodyContent");
         bodyContent.setAttribute("xsi:type", "java:com.webex.service.binding.attendee.LstMeetingAttendee");
-        attendeeDocument.getElementsByTagName("body").item(0).appendChild(bodyContent);
+        lmaDocument.getElementsByTagName("body").item(0).appendChild(bodyContent);
 
         /**
          * Parent is <bodyContent></bodyContent>
          */
-        Element mKey = attendeeDocument.createElement("meetingKey");
-        mKey.setTextContent(meetingKey);
-        bodyContent.appendChild(mKey);
+        DocumentUtil.appendChildWithContent(lmaDocument, "bodyContent", "meetingKey", meetingKey);
 
-        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(attendeeDocument));
+        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(lmaDocument));
     }
 
     @Override

@@ -2,6 +2,7 @@ package webex.method;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import webex.DocumentUtil;
 import webex.HttpUtil;
 import webex.ob.resp.SessionInfo;
 import webex.WebExUtil;
@@ -23,23 +24,21 @@ public class GetSessionInfo implements WebExMethodBase {
 
     @Override
     public String sendRequest() {
-        Document sessionInfoDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
+        Document gsiDocument = (Document) WebExUtil.getBaseDocument().cloneNode(true);
 
         /**
          * Parent is <body></body>
          */
-        Element bodyContent = sessionInfoDocument.createElement("bodyContent");
+        Element bodyContent = gsiDocument.createElement("bodyContent");
         bodyContent.setAttribute("xsi:type", "java:com.webex.service.binding.ep.GetSessionInfo");
-        sessionInfoDocument.getElementsByTagName("body").item(0).appendChild(bodyContent);
+        gsiDocument.getElementsByTagName("body").item(0).appendChild(bodyContent);
 
         /**
          * Parent is <bodyContent></bodyContent>
          */
-        Element sKey = sessionInfoDocument.createElement("sessionKey");
-        sKey.setTextContent(sessionKey);
-        bodyContent.appendChild(sKey);
+        DocumentUtil.appendChildWithContent(gsiDocument, "bodyContent", "sessionKey", sessionKey);
 
-        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(sessionInfoDocument));
+        return HttpUtil.sendXmlRequest(WebExUtil.xmlToString(gsiDocument));
     }
 
     @Override
