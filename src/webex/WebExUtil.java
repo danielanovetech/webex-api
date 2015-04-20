@@ -73,20 +73,22 @@ public class WebExUtil {
 //        WebExAPI.getSessionInfo("622242668").getResponse();
 //        new CreateTrainingSession().sendRequest();
 
-        AttSchedule attSchedule = new AttSchedule(5, 5, new Timestamp(new GregorianCalendar(2015,5,1).getTime().getTime()), TimeZoneId.HONG_KONG);
-        AttEnableOptions attEnableOptions = new AttEnableOptions(Options.VOIP, Options.ANNOTATION);
-        AttAttendeeOptions attAttendeeOptions =
-                new AttAttendeeOptions(true, true, true, "1111", 10,
-                        new Timestamp(new GregorianCalendar(2015,5,1).getTime().getTime()), false, TimeZoneId.HONG_KONG);
-        AttAccessControl attAccessControl = new AttAccessControl(Listing.PUBLIC, "1111");
-        AttRepeat attRepeat = new AttRepeat(RepeatType.SINGLE);
-        AttMetaData attMetaData = new AttMetaData("agenda", "test1122", "description");
-        AttTelephony attTelephony = new AttTelephony(TelephonySupport.NONE);
+//        AttSchedule attSchedule = new AttSchedule(5, 5, new Timestamp(new GregorianCalendar(2015,5,1).getTime().getTime()), TimeZoneId.HONG_KONG);
+//        AttEnableOptions attEnableOptions = new AttEnableOptions(Options.VOIP, Options.ANNOTATION);
+//        AttAttendeeOptions attAttendeeOptions =
+//                new AttAttendeeOptions(true, true, true, "1111", 10,
+//                        new Timestamp(new GregorianCalendar(2015,5,1).getTime().getTime()), false, TimeZoneId.HONG_KONG);
+//        AttAccessControl attAccessControl = new AttAccessControl(Listing.PUBLIC, "1111");
+//        AttRepeat attRepeat = new AttRepeat(RepeatType.SINGLE);
+//        AttMetaData attMetaData = new AttMetaData("agenda", "test1122", "description");
+//        AttTelephony attTelephony = new AttTelephony(TelephonySupport.NONE);
+//
+//        TrainingSession trainingSession = new TrainingSession(
+//                attAccessControl, attAttendeeOptions, attEnableOptions,
+//                attMetaData, attRepeat, attSchedule, attTelephony);
+//        WebExAPI.createTrainingSession(trainingSession).getResponse();
 
-        TrainingSession trainingSession = new TrainingSession(
-                attAccessControl, attAttendeeOptions, attEnableOptions,
-                attMetaData, attRepeat, attSchedule, attTelephony);
-        WebExAPI.createTrainingSession(trainingSession).getResponse();
+        WebExAPI.createTrainingSession(new TrainingSession(new AttMetaData("agenda","confname","desc")));
     }
 
     public static void initialize(String webExID, String password, String siteID,

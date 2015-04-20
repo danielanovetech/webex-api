@@ -13,6 +13,10 @@ public class AttRepeat {
         this.repeatType = repeatType.name();
     }
 
+    public AttRepeat() {
+        this.repeatType = RepeatType.SINGLE.name();
+    }
+
     private String repeatType;
 
     public String getRepeatType() {

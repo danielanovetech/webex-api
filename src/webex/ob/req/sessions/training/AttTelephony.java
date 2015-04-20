@@ -13,6 +13,10 @@ public class AttTelephony {
         this.telephonySupport = telephonySupport.name();
     }
 
+    public AttTelephony() {
+        this.telephonySupport = TelephonySupport.NONE.name();
+    }
+
     private String telephonySupport;
 
     public String getTelephonySupport() {

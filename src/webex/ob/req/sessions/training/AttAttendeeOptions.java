@@ -28,20 +28,23 @@ public class AttAttendeeOptions {
     public AttAttendeeOptions(Boolean request, Boolean registration, Boolean auto, String registrationPWD,
                               Integer maxRegistrations, Timestamp registrationCloseDate, Boolean emailInvitations,
                               TimeZoneId timeZoneId) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        simpleDateFormat.setTimeZone(timeZoneId.getTimeZone());
+        Date date = new Date(registrationCloseDate.getTime());
+        this.registrationCloseDate = simpleDateFormat.format(date);
         this.request = String.valueOf(request);
         this.registration = String.valueOf(registration);
         this.auto = String.valueOf(auto);
         this.registrationPWD = registrationPWD;
         this.maxRegistrations = String.valueOf(maxRegistrations);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        simpleDateFormat.setTimeZone(timeZoneId.getTimeZone());
-        Date date = new Date(registrationCloseDate.getTime());
-        this.registrationCloseDate = simpleDateFormat.format(date);
         this.emailInvitations = String.valueOf(emailInvitations);
     }
 
     public AttAttendeeOptions() {
         this.request = String.valueOf(true);
+        this.registration = String.valueOf(true);
+        this.auto = String.valueOf(true);
+        this.emailInvitations = String.valueOf(false);
     }
 
     public String getRequest() {

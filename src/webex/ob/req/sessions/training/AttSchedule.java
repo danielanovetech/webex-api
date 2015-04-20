@@ -4,6 +4,7 @@ import webex.ob.TimeZoneId;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -12,13 +13,25 @@ import java.util.Date;
 public class AttSchedule {
 
     public AttSchedule(Integer duration, Integer openTime, Timestamp startDate, TimeZoneId timeZoneId) {
-        this.duration = String.valueOf(duration);
-        this.openTime = String.valueOf(openTime);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         simpleDateFormat.setTimeZone(timeZoneId.getTimeZone());
         Date date = new Date(startDate.getTime());
         this.startDate = simpleDateFormat.format(date);
+        this.duration = String.valueOf(duration);
+        this.openTime = String.valueOf(openTime);
         this.timeZoneID = timeZoneId.getId();
+    }
+
+    public AttSchedule() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        simpleDateFormat.setTimeZone(TimeZoneId.HONG_KONG.getTimeZone());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DATE, 3);
+        this.startDate = simpleDateFormat.format(calendar.getTime());
+        this.duration = String.valueOf(20);
+        this.openTime = String.valueOf(5);
+        this.timeZoneID = TimeZoneId.HONG_KONG.getId();
     }
 
     private String startDate;

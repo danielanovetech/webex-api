@@ -32,13 +32,13 @@ public class TrainingSession {
     }
 
     public TrainingSession(AttMetaData attMetaData) {
-//        this.attAccessControl = new AttAccessControl();
-//        this.attAttendeeOptions = new AttAttendeeOptions();
-//        this.attEnableOptions = new AttEnableOptions();
-//        this.attMetaData = attMetaData;
-//        this.attRepeat = new AttRepeat();
-//        this.attSchedule = new AttSchedule();
-//        this.attTelephony = new AttTelephony();
+        this.attAccessControl = new AttAccessControl();
+        this.attAttendeeOptions = new AttAttendeeOptions();
+        this.attEnableOptions = new AttEnableOptions();
+        this.attMetaData = attMetaData;
+        this.attRepeat = new AttRepeat();
+        this.attSchedule = new AttSchedule();
+        this.attTelephony = new AttTelephony();
     }
 
     public AttAccessControl getAttAccessControl() {

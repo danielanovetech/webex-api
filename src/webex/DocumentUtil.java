@@ -14,7 +14,7 @@ public class DocumentUtil {
     }
 
     public static void appendChildWithContent(Document document, String parentName, String childName, String content) {
-        if (content == null) {
+        if (content != null) {
             Element childElement = document.createElement(childName);
             childElement.setTextContent(content);
             document.getElementsByTagName(parentName).item(0).appendChild(childElement);
