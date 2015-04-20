@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by bonjan on 2015/4/15.
  */
-public class AttEnableOptions {
+public class AttEnableOptions extends AbstractAtt {
     
     public enum Options {
         ATTENDEELIST("attendeeList"), JAVACLIENT("javaClient"), NATIVECLIENT("nativeClient"), CHAT("chat"),

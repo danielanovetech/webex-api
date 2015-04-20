@@ -3,7 +3,7 @@ package webex.ob.req.sessions.training;
 /**
  * Created by bonjan on 2015/4/15.
  */
-public class AttAccessControl {
+public class AttAccessControl extends AbstractAtt {
 
     public enum Listing {
         UNLISTED, PUBLIC, PRIVATE

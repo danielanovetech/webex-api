@@ -3,7 +3,7 @@ package webex.ob.req.sessions.training;
 /**
  * Created by bonjan on 2015/4/15.
  */
-public class AttRepeat {
+public class AttRepeat extends AbstractAtt {
 
     public enum RepeatType {
         SINGLE, RECURRING_SINGLE, MULTIPLE_SESSION

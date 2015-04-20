@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by bonjan on 2015/4/15.
  */
-public class AttAttendeeOptions {
+public class AttAttendeeOptions extends AbstractAtt {
 
     private String request;
 

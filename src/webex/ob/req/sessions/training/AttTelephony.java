@@ -3,7 +3,7 @@ package webex.ob.req.sessions.training;
 /**
  * Created by bonjan on 2015/4/15.
  */
-public class AttTelephony {
+public class AttTelephony extends AbstractAtt {
 
     public enum TelephonySupport {
         NONE, CALLIN, CALLBACK, OTHER

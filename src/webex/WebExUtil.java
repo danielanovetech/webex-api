@@ -88,7 +88,7 @@ public class WebExUtil {
 //                attMetaData, attRepeat, attSchedule, attTelephony);
 //        WebExAPI.createTrainingSession(trainingSession).getResponse();
 
-        WebExAPI.createTrainingSession(new TrainingSession(new AttMetaData("agenda","confname","desc")));
+//        WebExAPI.createTrainingSession(new TrainingSession(new AttMetaData("agenda","confname2300","desc")));
     }
 
     public static void initialize(String webExID, String password, String siteID,

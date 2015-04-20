@@ -1,5 +1,7 @@
 package webex.ob.req.sessions.training;
 
+import java.util.List;
+
 /**
  * Created by bonjan on 2015/4/15.
  */
@@ -31,14 +33,35 @@ public class TrainingSession {
         this.attTelephony = attTelephony;
     }
 
-    public TrainingSession(AttMetaData attMetaData) {
+    public TrainingSession() {
         this.attAccessControl = new AttAccessControl();
         this.attAttendeeOptions = new AttAttendeeOptions();
         this.attEnableOptions = new AttEnableOptions();
-        this.attMetaData = attMetaData;
+        this.attMetaData = new AttMetaData();
         this.attRepeat = new AttRepeat();
         this.attSchedule = new AttSchedule();
         this.attTelephony = new AttTelephony();
+    }
+
+    public TrainingSession(AbstractAtt... atts) {
+        this();
+        for (AbstractAtt att : atts) {
+            if (att instanceof AttAccessControl) {
+                this.attAccessControl = (AttAccessControl) att;
+            } else if (att instanceof AttAttendeeOptions) {
+                this.attAttendeeOptions = (AttAttendeeOptions) att;
+            } else if (att instanceof AttEnableOptions) {
+                this.attEnableOptions = (AttEnableOptions) att;
+            } else if (att instanceof AttMetaData) {
+                this.attMetaData = (AttMetaData) att;
+            } else if (att instanceof AttRepeat) {
+                this.attRepeat = (AttRepeat) att;
+            } else if (att instanceof AttSchedule) {
+                this.attSchedule = (AttSchedule) att;
+            } else if (att instanceof AttTelephony) {
+                this.attTelephony = (AttTelephony) att;
+            }
+        }
     }
 
     public AttAccessControl getAttAccessControl() {

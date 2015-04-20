@@ -3,7 +3,7 @@ package webex.ob.req.sessions.training;
 /**
  * Created by bonjan on 2015/4/15.
  */
-public class AttMetaData {
+public class AttMetaData extends AbstractAtt {
 
     private String confName;
 
@@ -15,6 +15,12 @@ public class AttMetaData {
         this.agenda = agenda;
         this.confName = confName;
         this.description = description;
+    }
+
+    public AttMetaData() {
+        this.agenda = "defAgenda";
+        this.confName = "defConfName";
+        this.description = "defDescription";
     }
 
     public String getConfName() {

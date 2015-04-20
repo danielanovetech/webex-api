@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * Created by bonjan on 2015/4/15.
  */
-public class AttSchedule {
+public class AttSchedule extends AbstractAtt {
 
     public AttSchedule(Integer duration, Integer openTime, Timestamp startDate, TimeZoneId timeZoneId) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
